@@ -32,7 +32,7 @@ def parse_args():
     parser.add_argument('--influxdbpassword', type=str, required=False, default="", help='InfluxDB password')
     parser.add_argument('--influxdbdatabase', type=str, required=False, default="sabnzbd", help='InfluxDB database')
     return parser.parse_args()
-    
+
 def qstatus(url,influxdb_client):
     try:
         data = requests.get('{0}{1}'.format(url, '&mode=queue'), verify=False).json()
@@ -42,9 +42,9 @@ def qstatus(url,influxdb_client):
             speed = float(queue['kbpersec'])
             total_mb_left = float(queue['mbleft']) # mbleft?
             total_jobs = float(queue['noofslots'])
-            time_left = queue['timeleft'])
+            time_left = queue['timeleft']
             status = queue['status']
-            
+
             json_body = [
             {
                 "measurement": "qstatus",
@@ -58,7 +58,7 @@ def qstatus(url,influxdb_client):
                 }
             }]
             influxdb_client.write_points(json_body)
-                
+
     except Exception as e:
         print str(e)
         pass
@@ -85,7 +85,7 @@ def server_stats(url,influxdb_client):
                 }
             }]
             influxdb_client.write_points(json_body)
-            
+
     except Exception as e:
         print str(e)
         pass
