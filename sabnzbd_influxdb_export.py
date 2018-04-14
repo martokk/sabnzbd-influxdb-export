@@ -42,6 +42,7 @@ def qstatus(url,influxdb_client):
             speed = float(queue['kbpersec'])
             total_mb_left = float(queue['mbleft']) # mbleft?
             total_jobs = float(queue['noofslots'])
+            time_left = queue['timeleft'])
             status = queue['status']
             
             json_body = [
@@ -52,7 +53,8 @@ def qstatus(url,influxdb_client):
                     "speed": speed,
                     "total_mb_left": total_mb_left,
                     "total_jobs": total_jobs,
-                    "status": status
+                    "status": status,
+                    "time_left": time_left
                 }
             }]
             influxdb_client.write_points(json_body)
